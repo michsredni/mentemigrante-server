@@ -28,7 +28,6 @@ function adminValidation (req, res, next){
 function psicoValidation (req, res, next){
   if(req.payload.rol === "psicologo") {
     next()
-    console.log(payload)
   } else{
   res.status(401).json({errorMessage: "no eres psicologo, no puedes acceder"})
 }

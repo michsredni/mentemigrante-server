@@ -5,8 +5,8 @@ const tallerSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  descripción: String,
-  duración: String,
+  descripcion: String,
+  duracion: String,
   imagen: String,
   creador: {
     type: mongoose.Schema.Types.ObjectId,
