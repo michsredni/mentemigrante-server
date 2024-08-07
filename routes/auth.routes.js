@@ -9,7 +9,7 @@ const router = require("express").Router();
 
 // POST "/api/auth/registro-usuario"
 router.post("/registro-usuario", async (req, res, next) => {
-const {email, contraseña, nombreCompleto,nacionalidad, residencia, imagen, tiempoNuevoPais, especializacion, rol} = req.body
+const {email, contraseña, nombreCompleto, nacionalidad, residencia, imagen, tiempoNuevoPais, especializacion, rol} = req.body
 
 if(!email || !contraseña){
     res.status(400).json({errorMessage: "Email y contraseña son obligatorios"})
@@ -57,7 +57,7 @@ await User.create({
 
 })
 
-//POST "/api/auth/iniciar-sesion"
+// POST "/api/auth/iniciar-sesion"
 router.post("/iniciar-sesion", async (req, res, next) => {
 
     const {email, contraseña} = req.body
@@ -107,8 +107,9 @@ router.post("/iniciar-sesion", async (req, res, next) => {
 // GET "/api/auth/verify" => validar el token 
 router.get("/verify", tokenValidation, (req, res, next) => {
 
+    console.log(req.headers.authorization)
+    
     console.log(req.payload) // ! para que el backend sepa quien es el usuario dueño del token. QUIEN ESTA HACIENDO LAS LLAMADAS.
-  
     res.status(200).json(req.payload) // ! esto es para que el frontend sepa quien es el usuario dueño de ese token. QUIEN ESTA NAVEGANDO POR LA PAGINA.
   
   })

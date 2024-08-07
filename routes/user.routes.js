@@ -1,7 +1,6 @@
 const router = require("express").Router();
 
-
-const {tokenValidation, adminValidation}= require("../middlewares/auth.middlewares");
+const { tokenValidation } = require("../middlewares/auth.middlewares");
 const User = require("../models/User.model");
 
 // GET "/api/user/propio" => que user puede ver su perfil
@@ -18,7 +17,6 @@ router.get("/propio", tokenValidation, async (req, res, next) => {
         console.log(error)
         next(error)
       }
-    
 
 })
 
