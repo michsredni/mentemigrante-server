@@ -9,8 +9,8 @@ function tokenValidation(req, res, next) {
 
     // pasar a la proxima ruta la información del usuario logeado
     req.payload = payload
+    next()
 
-    next() 
   } catch (error) {
     console.log(error)
     res.status(401).json({errorMessage: "Token no existe o no es valido"})
@@ -21,15 +21,16 @@ function adminValidation (req, res, next){
   if(req.payload.rol === "admin") {
     next()
   } else{
-res.status(401).json({errorMessage: "no eres admin, no puedes acceder"})
+  res.status(401).json({errorMessage: "no eres admin, no puedes acceder"})
   }
 }
 
 function psicoValidation (req, res, next){
   if(req.payload.rol === "psicologo") {
     next()
+    console.log(payload)
   } else{
-res.status(401).json({errorMessage: "no eres psicologo, no puedes acceder"})
+  res.status(401).json({errorMessage: "no eres psicologo, no puedes acceder"})
 }
 }
 

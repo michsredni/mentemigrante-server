@@ -1,6 +1,6 @@
-const { Schema, model } = require("mongoose");
+const { mongoose, model } = require("mongoose");
 
-const tallerSchema = new Schema({
+const tallerSchema = new mongoose.Schema({
   nombre: {
     type: String,
     trim: true,
