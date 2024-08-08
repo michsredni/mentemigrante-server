@@ -8,18 +8,17 @@ router.post("/", tokenValidation, psicoValidation, async (req, res, next) => {
     // tokenValidation: valida y decifra el token para tener el payload. psicoValidation: valida el rol en el payload
     
     try {
-        const {nombre, descripcion, duracion, imagen, creador, usuarios } = req.body
+        const {nombre, descripcion, duracion, imagen } = req.body
 
         const response = await Taller.create({
             nombre,
             descripcion,
             duracion,
             imagen,
-            creador,
-            usuarios
+            creador: req.payload._id,
         })
         res.status(200).json(response)
-        
+               
     } catch (error) {
         next(error)
     }
@@ -45,7 +44,6 @@ router.get("/:tallerId", async (req, res, next) => {
     }
 })
 
-//! Hacer revisión de POSTMAN desde esta ruta para abajo
 // PUT "/api/talleres/:tallerId" -> actualiza los detalles de un taller
 router.put("/:tallerId", async (req, res, next) => {
     try {
@@ -60,13 +58,58 @@ router.put("/:tallerId", async (req, res, next) => {
             usuarios
         }, { new: true })
 
-        req.status(200).json(response)
+        res.status(200).json(response)
 
     } catch (error) {
         next(error)
     }
 })
 
+// PATCH "/api/talleres/:tallerId/duracion" -> actualiza el valor de duración
+router.patch("/:tallerId/duracion", async (req, res, next) => {
+    try {
+        await Taller.findByIdAndUpdate(req.params.tallerId, {duracion: req.body.duracion},{new: true})
+        
+        res.sendStatus(204)
+        
+    } catch (error) {
+        next(error)
+    }
+})
+
+// PATCH "/api/talleres/:tallerId/asistencia" -> usuario se apunta al taller
+router.patch("/:tallerId/asistencia", tokenValidation, async (req, res, next) => {
+    try {
+        if(req.payload.rol === "user"){
+            await Taller.findByIdAndUpdate(req.params.tallerId, { $addToSet: {usuarios: req.payload._id}}, {new: true})
+            res.sendStatus(204)
+        } else{
+            res.status(401).json({errorMessage: "eres psicólogo, no puedes registrarte al taller"})
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
+// PATCH "/api/talleres/:tallerId/remover-asistencia" -> usuario se quita del taller
+router.patch("/:tallerId/remover-asistencia", tokenValidation, async (req, res, next) => {
+    try {
+        await Taller.findByIdAndUpdate(req.params.tallerId, { $pull: {usuarios: req.payload._id}}, {new: true})
+        res.sendStatus(204)
+    } catch (error) {
+        next(error)
+    }
+})
+
+// DELETE "/api/talleres/:tallerId" -> borra un taller
+router.delete("/:tallerId", async (req, res, next) => {
+    try {
+        await Taller.findByIdAndDelete(req.params.tallerId)
+        res.sendStatus(202)
+    } catch (error) {
+        next(error)
+    }
+})
 
 
 module.exports = router

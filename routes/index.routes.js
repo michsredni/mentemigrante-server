@@ -13,4 +13,7 @@ router.use("/usuarios", usuarioRouter)
 const tallerRouter = require("./taller.routes")
 router.use("/talleres", tallerRouter)
 
+const tableroRouter = require("./tablero.routes")
+router.use("/tableros", tableroRouter)
+
 module.exports = router;
