@@ -27,7 +27,7 @@ router.post("/", tokenValidation, psicoValidation, async (req, res, next) => {
 // GET "/api/talleres" -> buscar todos los talleres
 router.get("/", async (req, res, next) => {
     try {
-        const todosTalleres = await Taller.find()
+        const todosTalleres = await Taller.find().populate("usuarios")
         res.status(200).json(todosTalleres);
     } catch (error) {
         next(error)
