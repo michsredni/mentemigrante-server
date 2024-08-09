@@ -8,7 +8,7 @@ router.post("/", tokenValidation, psicoValidation, async (req, res, next) => {
     // tokenValidation: valida y decifra el token para tener el payload. psicoValidation: valida el rol en el payload
     
     try {
-        const {nombre, descripcion, duracion, imagen } = req.body
+        const {nombre, descripcion, duracion, imagen, usuarios } = req.body
 
         const response = await Taller.create({
             nombre,
@@ -16,6 +16,7 @@ router.post("/", tokenValidation, psicoValidation, async (req, res, next) => {
             duracion,
             imagen,
             creador: req.payload._id,
+            usuarios,
         })
         res.status(200).json(response)
                
@@ -27,7 +28,7 @@ router.post("/", tokenValidation, psicoValidation, async (req, res, next) => {
 // GET "/api/talleres" -> buscar todos los talleres
 router.get("/", async (req, res, next) => {
     try {
-        const todosTalleres = await Taller.find().populate("usuarios")
+        const todosTalleres = await Taller.find().populate("usuarios").populate("creador")
         res.status(200).json(todosTalleres);
     } catch (error) {
         next(error)
