@@ -16,4 +16,7 @@ router.use("/talleres", tallerRouter)
 const tableroRouter = require("./tablero.routes")
 router.use("/tableros", tableroRouter)
 
+const uploadRoutes = require("./upload.routes");
+router.use("/upload", uploadRoutes);
+
 module.exports = router;
