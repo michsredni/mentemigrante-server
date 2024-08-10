@@ -6,10 +6,9 @@ const router = require("express").Router();
 // POST "/api/talleres" -> crear un nuevo taller
 router.post("/", tokenValidation, psicoValidation, async (req, res, next) => { 
     // tokenValidation: valida y decifra el token para tener el payload. psicoValidation: valida el rol en el payload
-    
+    console.log(req);
     try {
         const {nombre, descripcion, duracion, imagen, usuarios } = req.body
-
         const response = await Taller.create({
             nombre,
             descripcion,

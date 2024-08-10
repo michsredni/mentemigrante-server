@@ -11,6 +11,7 @@ router.get("/propio", tokenValidation, async (req, res, next) => {
     try {
     
         const response = await User.findById(req.payload._id)
+        console.log(response)
         res.json(response)
     
       } catch (error) {

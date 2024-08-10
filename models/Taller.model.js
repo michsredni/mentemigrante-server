@@ -12,10 +12,10 @@ const tallerSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  usuarios: {
-    type: [mongoose.Schema.Types.ObjectId],
+  usuarios: [{
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-  },
+  }],
 });
 
 const Taller = model("Taller", tallerSchema);
