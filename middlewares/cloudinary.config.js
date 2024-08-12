@@ -13,7 +13,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    allowed_formats: ["jpg", "png", "jpeg","svg"],
+    allowed_formats: ["jpg", "png", "jpeg","svg", "web"],
     folder: "mentemigrante", // The name of the folder where images will be stored in cloudinary
     
   },

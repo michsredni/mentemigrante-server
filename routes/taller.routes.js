@@ -37,7 +37,7 @@ router.get("/", async (req, res, next) => {
 // GET "/api/talleres/:tallerId" -> buscar un taller por ID
 router.get("/:tallerId", async (req, res, next) => {
     try {
-        const buscarTallerId = await Taller.findById(req.params.tallerId)
+        const buscarTallerId = await Taller.findById(req.params.tallerId).populate("usuarios")
         res.status(200).json(buscarTallerId)
     } catch (error) {
         next(error)
@@ -81,7 +81,10 @@ router.patch("/:tallerId/duracion", async (req, res, next) => {
 router.patch("/:tallerId/asistencia", tokenValidation, async (req, res, next) => {
     try {
         if(req.payload.rol === "user"){
-            await Taller.findByIdAndUpdate(req.params.tallerId, { $addToSet: {usuarios: req.payload._id}}, {new: true})
+            const response = await Taller.findByIdAndUpdate(req.params.tallerId, { $addToSet: {usuarios: req.payload._id}}, {new: true})
+            res.sendStatus(204)
+
+            const responsePopulate = await Taller.findById(response._id).populate("usuarios")
             res.sendStatus(204)
         } else{
             res.status(401).json({errorMessage: "eres psicólogo, no puedes registrarte al taller"})
