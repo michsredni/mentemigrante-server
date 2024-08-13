@@ -21,6 +21,28 @@ router.get("/propio", tokenValidation, async (req, res, next) => {
 
 })
 
+// PUT "/api/usuarios/propio" => usuario pueda editar su propia info
+router.put("/propio", tokenValidation, async (req, res, next) => {
+  try {
+    const {contrasena,nombreCompleto, nacionalidad,residencia, tiempoNuevoPais, imagen, especializacion} = req.body
+
+    const response = await User.findByIdAndUpdate(req.payload._id, {
+      nombreCompleto,
+      nacionalidad,
+      residencia,
+      tiempoNuevoPais,
+      especializacion
+    }, {new: true} )
+
+    res.status(200).json(response)
+
+  } catch (error) {
+    next(error)
+  }
+})
+
+// TODO hacer ruta PATCH "/api/usuarios/propio/editar/imagen"
+
 // GET "/api/usuarios" -> buscar todos los usuarios
 router.get("/", async (req, res, next) => {
   try {
