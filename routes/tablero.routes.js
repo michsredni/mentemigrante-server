@@ -38,8 +38,7 @@ router.get(
     try {
       //queremos saber los tableros que ha creado un usuario especifico
       const tablerosDeUsuario = await Tablero.find({
-        creador: req.params.usuarioId,
-      });
+        creador: req.params.usuarioId});
       res.status(200).json(tablerosDeUsuario);
     } catch (error) {
       next(error);
