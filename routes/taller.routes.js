@@ -44,6 +44,9 @@ router.get("/:tallerId", async (req, res, next) => {
     }
 })
 
+// GET "/api/talleres/:psicoId" -> busca talleres del psicologo por su ID
+// TODO hacer esta ruta para agregar en el FE en PsicoDetails
+
 // PUT "/api/talleres/:tallerId" -> actualiza los detalles de un taller
 router.put("/:tallerId", async (req, res, next) => {
     try {
