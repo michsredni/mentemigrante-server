@@ -1,5 +1,6 @@
 {
   "name": "mentemigrante-server",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node server.js",
@@ -17,18 +18,5 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0"
-  },
-    "version": "2",
-    "builds": [
-        {
-            "src": "server.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "server.js"
-        }
-    ]
+  }
 }
